@@ -33,7 +33,7 @@ bool bfs(int src){
 bool bipartite(int n){
     for(int i=1;i<=n;i++){
         if(color[i]==-1){
-            if(!bfs(i))
+            if(bfs(i)==0)
                 return false;
         }
     }
