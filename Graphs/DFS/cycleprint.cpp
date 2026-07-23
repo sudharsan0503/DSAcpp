@@ -15,24 +15,27 @@ void dfs(int node,int par){
     parent[node]=par;
     color[node]=2;
     for(auto v:g[node]){
+         if(is_cycle) return;
          if(color[v]==1){
             //node -v is forward edge
             dfs(v,node);
-         }else if(color[v]==2){
-            //node -v is back edge
-            if(is_cycle==0){
-               int temp=node;
-               while(temp!=v){
-                any_cycle.push_back(temp);
-                temp=parent[temp];
-               }
-               any_cycle.push_back(temp);
-               reverse(any_cycle.begin(),any_cycle.end());
-            }
-            is_cycle=1;
-         }else if(color[v]==3){
-            //node -v is cross edge
          }
+         else if(color[v]==2){
+            int temp=node;
+                while(temp!=v){
+                    any_cycle.push_back(temp);
+                    temp=parent[temp];
+                }
+            any_cycle.push_back(v);
+            reverse(any_cycle.begin(),any_cycle.end());
+            any_cycle.push_back(v);   // close cycle repeat the node
+
+            is_cycle=true;
+            return;
+        }
+        else if(color[v]==3){
+            //node -v is cross edge
+        }
     }
     color[node]=3;
 }
